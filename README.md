@@ -23,7 +23,7 @@ Ready-to-use builds are available in the [releases section](https://github.com/i
 | Platform | Minimum |
 |---|---|
 | Windows | Windows 10 (64-bit) |
-| macOS | macOS 13 Ventura (Apple Silicon) |
+| macOS | macOS 13 Ventura (Apple Silicon or Intel x86_64) |
 | Linux | x86-64 with glibc 2.35+, e.g. Ubuntu 22.04, Debian 12, Fedora 36 |
 | Android | Android 13 (API 33, arm64) |
 | iOS / iPadOS | iOS 17 (arm64 device; no simulator) |
@@ -31,7 +31,9 @@ Ready-to-use builds are available in the [releases section](https://github.com/i
 A GPU supporting OpenGL 3.3, OpenGL ES 3.2 or Vulkan is required.
 
 > Windows 7/8 and 32-bit Windows are no longer supported; use an older release if
-> you need them. Intel macOS builds are not currently published.
+> you need them. Intel macOS (x86_64) builds are provided by this fork — they use
+> Vulkan 1.3 via bundled MoltenVK, since Apple's deprecated Intel OpenGL driver is
+> buggy; fresh configs on macOS default to Vulkan 1.3 automatically.
 
 ## Running
 Download the ZIP archive that matches your operating system and extract its contents to your preferred location.
