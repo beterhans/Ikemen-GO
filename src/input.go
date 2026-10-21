@@ -130,6 +130,14 @@ func OnKeyPressed(key Key, mk ModifierKey) {
 		}
 		sys.keyState[key] = true
 		sys.keyInput = key
+		// Fallback for when text input is disabled (macOS, issue #4049): SDL_TEXTINPUT
+		// never fires, so synthesize keyString from the keysym for printable ASCII.
+		// keysym.sym already has shift/caps applied (SDL_GetKeyFromScancode). On
+		// platforms where text input is active, the TEXTINPUT event arrives after
+		// KEYDOWN and overwrites this value.
+		if key >= 0x20 && key <= 0x7e {
+			sys.keyString = string(rune(key))
+		}
 		escPressed := key == KeyEscape && (mk&ModCtrlAlt) == 0
 		sys.esc = sys.esc || escPressed
 		sys.escPending = sys.escPending || (sys.gameRunning && escPressed)
