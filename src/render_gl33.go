@@ -1389,7 +1389,7 @@ func (r *Renderer_GL33) ChangeProgram(prog uint32) {
 	}
 
 	// Same for TTF fonts
-	if r.program == gfxFont.(*FontRenderer_GL33).shaderProgram.program {
+	if gfxFont != nil && r.program == gfxFont.(*FontRenderer_GL33).shaderProgram.program {
 		gfxFont.(*FontRenderer_GL33).ReleaseFontPipeline()
 	}
 

@@ -17,6 +17,7 @@ type Window struct {
 	fullscreen      bool
 	closeflag       bool
 	focused         bool
+	rendererReady   bool // set once the renderer is fully initialized; guards spurious early WINDOWEVENT_EXPOSED
 	renderingPaused bool // for Android Activity resume behavior
 }
 
@@ -438,10 +439,13 @@ func (w *Window) pollEvents() {
 		case sdl.WindowEvent:
 			switch t.Event {
 			case sdl.WINDOWEVENT_EXPOSED:
-				renderName := gfx.GetName()
-				if renderName == "OpenGL 3.3" {
+				// Ignore spurious early exposure events before the renderer is ready.
+				if w.rendererReady {
+					renderName := gfx.GetName()
+					if renderName == "OpenGL 3.3" {
 					gfx.EndFrame()
 					w.SwapBuffers()
+					}
 				}
 			case sdl.WINDOWEVENT_CLOSE:
 				w.closeflag = true

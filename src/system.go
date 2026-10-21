@@ -499,6 +499,7 @@ func (s *System) init(w, h int32) *lua.LState {
 	gfxFont.Init(gfx)
 	Logcat("Check D: We are GOOD")
 	gfx.BeginFrame(false)
+	s.window.rendererReady = true
 
 	// And the audio.
 	speaker = &SDLSpeaker{}

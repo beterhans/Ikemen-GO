@@ -5,6 +5,8 @@
   </a>
 </p>
 
+> **Note for Intel Mac users (beterhans fork):** The original author only provides ready-to-use builds for Apple Silicon macOS — no official Intel (x86_64) build exists. The main obstacle is Apple's deprecated OpenGL driver on Intel Macs (e.g. Intel UHD 630), which is buggy and can crash the engine's default OpenGL 3.3 renderer. This `beterhans` fork will try to provide Intel macOS builds as long as we can: on macOS, fresh configs now default to **Vulkan 1.3** (via bundled MoltenVK), which bypasses the broken OpenGL driver and runs stably on Intel hardware.
+
 Ikemen GO is an open source fighting game engine that supports resources from the [M.U.G.E.N](https://en.wikipedia.org/wiki/Mugen_(game_engine)) engine, written in Google’s programming language, [Go](https://go.dev/). It is a complete rewrite of a prior engine known simply as Ikemen.
 
 ## Features
