@@ -19,6 +19,8 @@ Refer to [our wiki](https://github.com/ikemen-engine/Ikemen-GO/wiki) to see a co
 ## Installing
 Ready-to-use builds are available in the [releases section](https://github.com/ikemen-engine/Ikemen-GO/releases). Stable releases use tags such as `v1.0.0`, while release candidates use tags such as `v1.0.0-rc.1` and are marked as pre-releases. [Nightly builds](https://github.com/ikemen-engine/Ikemen-GO/releases/tag/nightly) are updated after each commit to `develop` and may be less stable.
 
+> Intel macOS (x86_64) builds are provided by this fork — they use Vulkan 1.3 via bundled MoltenVK, since Apple's deprecated Intel OpenGL driver is buggy; fresh configs on macOS default to Vulkan 1.3 automatically.
+
 ## Running
 Download the ZIP archive that matches your operating system and extract its contents to your preferred location.
 
