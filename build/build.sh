@@ -410,8 +410,11 @@ function varMacOSARM() {
 	export GOARCH=arm64
 	case "${currentOS}" in
 		[mM][aA][cC][oO][sS])
-			export CC=clang
-			export CXX=clang++
+			# Respect a pre-set CC/CXX (e.g. "clang -target arm64-apple-macos11"
+			# for cross-building the arm64 slice on an Intel host).
+			: "${CC:=clang}"
+			: "${CXX:=clang++}"
+			export CC CXX
 		;;
 		*)
 			export CC=o64-clang
@@ -425,8 +428,10 @@ function varMacOS() {
 	export GOARCH=amd64
 	case "${currentOS}" in
 		[mM][aA][cC][oO][sS])
-			export CC=clang
-			export CXX=clang++
+			# Respect a pre-set CC/CXX (see varMacOSARM).
+			: "${CC:=clang}"
+			: "${CXX:=clang++}"
+			export CC CXX
 		;;
 		*)
 			export CC=o64-clang
