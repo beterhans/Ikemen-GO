@@ -98,7 +98,7 @@ LIBVPX_PREFIX="${LIBVPX_PREFIX:-$FFMPEG_PREFIX}"
 FFMPEG_REBUILT=0
 
 # ---- App metadata (overridden by CI)
-APP_VERSION="${APP_VERSION:-nightly}"
+APP_VERSION="${APP_VERSION:-1.0.0}"
 APP_BUILDTIME="${APP_BUILDTIME:-$(date '+%Y.%m.%d')}"
 
 # --- Always pause on Windows on exit (covers success and failure) ----------
