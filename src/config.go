@@ -4,6 +4,7 @@ import (
 	_ "embed" // Support for go:embed resources
 	"fmt"
 	"reflect"
+	"runtime"
 	"strconv"
 	"strings"
 
@@ -312,6 +313,11 @@ func loadConfig(def string) (*Config, error) {
 	c.DefaultOnlyIni = defaultOnlyIni
 	c.normalize()
 	c.sysSet()
+	// macOS: fresh configs default to Vulkan 1.3 (bundled MoltenVK) to avoid
+	// the buggy Intel OpenGL driver on macOS.
+	if runtime.GOOS == "darwin" && userIniFile == nil {
+		c.SetValueUpdate("Video.RenderMode", "Vulkan 1.3")
+	}
 	c.Save(def)
 	return &c, nil
 }

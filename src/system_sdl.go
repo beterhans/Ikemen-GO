@@ -11,10 +11,11 @@ import (
 
 type Window struct {
 	*sdl.Window
-	title      string
-	x, y, w, h int
-	fullscreen bool
-	closeflag  bool
+	title         string
+	x, y, w, h    int
+	fullscreen    bool
+	closeflag     bool
+	rendererReady bool // set once the renderer is fully initialized; guards spurious early WINDOWEVENT_EXPOSED
 }
 
 func (s *System) newWindow(w, h int) (*Window, error) {
@@ -148,7 +149,7 @@ func (s *System) newWindow(w, h int) (*Window, error) {
 		input.controllerstate[i] = &ControllerState{Buttons: make(map[sdl.GameControllerButton]byte)}
 	}
 
-	return &Window{window, s.cfg.Config.WindowTitle, int(x), int(y), w, h, fullscreen, false}, nil
+	return &Window{window, s.cfg.Config.WindowTitle, int(x), int(y), w, h, fullscreen, false, false}, nil
 }
 
 func (w *Window) SwapBuffers() {
@@ -384,10 +385,13 @@ func (w *Window) pollEvents() {
 			}
 		case sdl.WindowEvent:
 			if t.Event == sdl.WINDOWEVENT_EXPOSED {
-				renderName := gfx.GetName()
-				if renderName == "OpenGL 3.3" {
-					gfx.EndFrame()
-					w.SwapBuffers()
+				// Ignore spurious early exposure events before the renderer is ready.
+				if w.rendererReady {
+					renderName := gfx.GetName()
+					if renderName == "OpenGL 3.3" {
+						gfx.EndFrame()
+						w.SwapBuffers()
+					}
 				}
 			} else if t.Event == sdl.WINDOWEVENT_CLOSE {
 				w.closeflag = true
